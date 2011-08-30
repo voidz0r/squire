@@ -10,6 +10,10 @@
  */
 
 spl_autoload_register(function($class) {
+	if ($class[0] == '\\') {
+		$class = substr($class, 0, 1);
+	}
+	
 	if (strpos($class, 'Squire\\') === false) {
 		return;
 	}
