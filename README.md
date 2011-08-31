@@ -34,8 +34,6 @@ The following components may be developed in the future:
    		Basically, it maps a URI (e.g. ```/blog/show/1```) to a callback
    		(e.g. ```BlogController::showAction(1)```). Routing is used in MVC
    		frameworks.
-   * 	**Http**: a component to handle HTTP requests/responses. It will support
-   		headers/cookies manipulations and a lot more.
 
 Why should I use Squire?
 ------------------------
