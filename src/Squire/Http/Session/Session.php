@@ -9,9 +9,9 @@
  * in the COPYING.txt file distributed with the source code.
  */
 
-namespace Squire\Session;
+namespace Squire\Http\Session;
 
-use Squire\Session\Storage\AbstractStorage;
+use Squire\Http\Session\Storage\AbstractStorage;
 
 /**
  * Session

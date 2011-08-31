@@ -9,7 +9,7 @@
  * in the COPYING.txt file distributed with the source code.
  */
 
-namespace Squire\Session\Storage;
+namespace Squire\Http\Session\Storage;
 
 /**
  * Abstract session storage
