@@ -46,6 +46,11 @@ class RouteCompilerTest extends \PHPUnit_Framework_TestCase
 				)),
 				'@^/page/?([a-zA-Z0-9\-]+)?/?$@'
 			),
+			
+			array(
+				new Route('/{module}', array(), array()),
+				'@^/([a-zA-Z0-9_\+\-%]+)/?$@',
+			),
 		);
 	}
 }
