@@ -48,10 +48,10 @@ class UniversalLoaderTest extends \PHPUnit_Framework_TestCase
 		return array(
 			array(
 				array(
-					'Acme' => dirname(__FILE__) . '/fixtures',
+					'Acme' => dirname(__FILE__) . '/Fixtures',
 				),
 				array(
-					'Foo' => dirname(__FILE__) . '/fixtures',
+					'Foo' => dirname(__FILE__) . '/Fixtures',
 				),
 				array(
 					'Acme\TestClass' => true,
@@ -109,7 +109,7 @@ class UniversalLoaderTest extends \PHPUnit_Framework_TestCase
 	{
 		$loader = new UniversalLoader();
 		
-		$loader->registerNamespace('Acme', dirname(__FILE__) . '/fixtures');
+		$loader->registerNamespace('Acme', dirname(__FILE__) . '/Fixtures');
 		$loader->loadClass('Acme\UndefinedClass');
 	}
 }
