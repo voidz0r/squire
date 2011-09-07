@@ -26,7 +26,33 @@ class RouteCompilerTest extends \PHPUnit_Framework_TestCase
 		
 		$this->assertEquals($expected_regex, $regex);
 	}
+        
+        /**
+         * Testing if no requirement supplied (2nd parameter) the default will be
+         * applied.
+         * 
+         * @see RouteCompiler::compileRegex() line 57
+	 * @dataProvider getRegexTestsWithoutPatterns
+	 */
+        public function testCompileRegexShouldUseDefaultRegex(Route $route, $expected_regex) 
+        {
+            $compiler = new RouteCompiler();
+		$regex = $compiler->compileRegex($route);
+		
+		$this->assertEquals($expected_regex, $regex);
+        }
 	
+        
+        public function getRegexTestsWithoutPatterns() 
+        {
+            return array(
+			array(
+				new Route('/post/{slug}/{id}', array(), array()),
+				'@^/post/([a-zA-Z0-9_\+\-%]+)/([a-zA-Z0-9_\+\-%]+)/?$@'
+			)
+		);
+        }
+                
 	public function getRegexTests()
 	{
 		return array(
