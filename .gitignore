@@ -1,2 +1,5 @@
 .project
 .settings
+nbproject
+phpunit.xml
+tests/log
