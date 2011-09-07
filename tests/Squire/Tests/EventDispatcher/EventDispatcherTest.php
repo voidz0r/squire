@@ -42,6 +42,8 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 			array_values($listeners),
 			array_values($dispatcher->getSortedListeners()
 		));
+		
+		$this->assertSame(array(), $dispatcher->getListeners('bar'));
 	}
 	
 	public function getListenerManipulationTests()
@@ -67,6 +69,7 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 		}, 10);
 		$dispatcher->addListener('foo', function(Event &$event) {
 			$event->getParamBag()->set('fruit', 'apple');
+			$event->stopPropagation();
 		}, 9);
 		
 		$event = new Event(ParameterBag::fromArray(array(
@@ -74,6 +77,15 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 		)));
 		$dispatcher->dispatch('foo', $event);
 		
-		$this->assertEquals('cherry', $event->getParamBag()->get('fruit'));
+		$this->assertEquals('apple', $event->getParamBag()->get('fruit'));
+	}
+	
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnInvalidRemove()
+	{
+		$dispatcher = new EventDispatcher();
+		$dispatcher->removeListener('foo', function(Event &$event) { });
 	}
 }
