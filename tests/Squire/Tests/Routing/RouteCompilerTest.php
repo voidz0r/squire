@@ -53,4 +53,27 @@ class RouteCompilerTest extends \PHPUnit_Framework_TestCase
 			),
 		);
 	}
+	
+	/**
+	 * @dataProvider getInvalidDefaultTests
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testInvalidDefault(Route $route)
+	{
+		$compiler = new RouteCompiler();
+		$compiler->compile($route);
+	}
+	
+	public function getInvalidDefaultTests()
+	{
+		return array(
+			array(
+				new Route('/user/{id}', array(
+					'id' => 'foo',
+				), array(
+					'id' => '\d+',
+				)),
+			),
+		);
+	}
 }

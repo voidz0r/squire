@@ -32,6 +32,14 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 			}
 			
 			$router[$name] = $route;
+			$this->assertSame($route, $router[$name]);
+			
+			$this->assertTrue(isset($router[$name]));
+			
+			unset($router[$name]);
+			$this->assertFalse(isset($router[$name]));
+			
+			$router[$name] = $route;
 		}
 		
 		foreach ($tests as $uri => $return) {
