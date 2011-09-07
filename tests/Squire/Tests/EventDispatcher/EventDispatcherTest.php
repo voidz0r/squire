@@ -17,6 +17,44 @@ use Squire\EventDispatcher\Event;
 
 class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 {
+	/**
+	 * @dataProvider getListenerManipulationTests
+	 */
+	public function testListenerManipulation(array $listeners)
+	{
+		$dispatcher = new EventDispatcher();
+		
+		foreach ($listeners as $listener) {
+			$dispatcher->addListener('foo', $listener);
+			$this->assertSame(5, $dispatcher->hasListener('foo', $listener));
+			
+			$dispatcher->removeListener('foo', $listener);
+			$this->assertFalse($dispatcher->hasListener('foo', $listener));
+			
+			$dispatcher->addListener('foo', $listener);
+		}
+		
+		$listeners = array(
+			'foo' => $listeners,
+		);
+		
+		$this->assertSame(
+			array_values($listeners),
+			array_values($dispatcher->getSortedListeners()
+		));
+	}
+	
+	public function getListenerManipulationTests()
+	{
+		return array(
+			array(
+				array(
+					function(Event &$event) { },
+				),
+			),
+		);
+	}
+	
 	public function testSorting()
 	{
 		$dispatcher = new EventDispatcher();
