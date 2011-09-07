@@ -26,6 +26,24 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($defaults, $route->getDefaults());
 		$this->assertEquals($requirements, $route->getRequirements());
 	}
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetDefaultShouldThrowExceptionOnWrongParameter()
+    {
+        $route = new Route(null,array(),array());
+        $route->getDefault('invalidParameter');
+    }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetRequirementShouldThrowExceptionOnWrongParameter()
+    {
+        $route = new Route(null, array(), array());
+        $route->getRequirement('invalidParameter');
+    }
 	
 	public function getGettersTests()
 	{
