@@ -43,7 +43,7 @@ class EventDispatcher
 	public function getListeners($eventName = null)
 	{
 		if ($eventName === null) {
-			return $this->listeners[$eventName];
+			return $this->listeners;
 		}
 		
 		if (!isset($this->listeners[$eventName])) {
