@@ -100,4 +100,22 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 			),
 		);
 	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnInvalidDeattach()
+	{
+		$router = new Router();
+		unset($router['foo']);
+	}
+	
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnInvalidGet()
+	{
+		$router = new Router();
+		$router['foo'];
+	}
 }
