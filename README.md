@@ -44,4 +44,3 @@ and type the following commands:
 
 You should see a green **OK**. If you get any error messages, try downloading
 the framework again. If the problem persists, contact the authors.
-
