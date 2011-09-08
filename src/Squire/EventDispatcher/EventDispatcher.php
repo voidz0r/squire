@@ -98,7 +98,7 @@ class EventDispatcher
 	public function hasListener($eventName, $listener)
 	{
 		foreach ($this->getListeners($eventName) as $priority => $listeners) {
-			if (array_search($listener, $listeners, true) !== false) {
+			if (in_array($listener, $listeners, true)) {
 				return $priority;
 			}
 		}
