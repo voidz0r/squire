@@ -43,7 +43,7 @@ class EventDispatcher
 	public function getListeners($eventName = null)
 	{
 		if ($eventName === null) {
-			return $this->listeners[$eventName];
+			return $this->listeners;
 		}
 		
 		if (!isset($this->listeners[$eventName])) {
@@ -98,7 +98,7 @@ class EventDispatcher
 	public function hasListener($eventName, $listener)
 	{
 		foreach ($this->getListeners($eventName) as $priority => $listeners) {
-			if (array_search($listener, $listeners, true) !== false) {
+			if (in_array($listener, $listeners, true)) {
 				return $priority;
 			}
 		}
@@ -114,9 +114,19 @@ class EventDispatcher
 	 * @param integer  $priority  Listener's priority.
 	 * 
 	 * @access public
+	 * 
+	 * @throws \InvalidArgumentException If the listener is already listening
+	 * 									 for the given event.
 	 */
 	public function addListener($eventName, $listener, $priority = 5)
 	{
+		if ($this->hasListener($eventName, $listener) !== false) {
+			throw new \InvalidArgumentException(sprintf(
+				'The given listener is already listening for "%s" event.',
+				$eventName
+			));
+		}
+
 		$this->listeners[$eventName][$priority][] = $listener;
 		unset($this->sorted[$eventName]);
 	}
@@ -135,7 +145,7 @@ class EventDispatcher
 	{
 		$priority = $this->hasListener($eventName, $listener);
 		
-		if (!$priority) {
+		if ($priority === false) {
 			throw new \InvalidArgumentException(sprintf(
 				'The given listener has not been added to the "%s" event.',
 				$eventName

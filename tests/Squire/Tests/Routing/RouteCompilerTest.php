@@ -24,7 +24,7 @@ class RouteCompilerTest extends \PHPUnit_Framework_TestCase
 		$compiler = new RouteCompiler();
 		$regex = $compiler->compileRegex($route);
 		
-		$this->assertEquals($expected_regex, $regex);
+		$this->assertSame($expected_regex, $regex);
 	}
 	
 	public function getRegexTests()
@@ -50,6 +50,29 @@ class RouteCompilerTest extends \PHPUnit_Framework_TestCase
 			array(
 				new Route('/{module}', array(), array()),
 				'@^/([a-zA-Z0-9_\+\-%]+)/?$@',
+			),
+		);
+	}
+	
+	/**
+	 * @dataProvider getInvalidDefaultTests
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testInvalidDefault(Route $route)
+	{
+		$compiler = new RouteCompiler();
+		$compiler->compile($route);
+	}
+	
+	public function getInvalidDefaultTests()
+	{
+		return array(
+			array(
+				new Route('/user/{id}', array(
+					'id' => 'foo',
+				), array(
+					'id' => '\d+',
+				)),
 			),
 		);
 	}

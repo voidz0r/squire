@@ -51,4 +51,22 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
 			),
 		);
 	}
+	
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnInvalidGet()
+	{
+		$bag = new ParameterBag();
+		$bag->get('invalid');
+	}
+	
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnInvalidRemove()
+	{
+		$bag = new ParameterBag();
+		$bag->remove('invalid');
+	}
 }

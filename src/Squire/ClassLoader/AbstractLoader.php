@@ -42,7 +42,7 @@ abstract class AbstractLoader
 	 */
 	final public function register()
 	{
-		if (in_array($this->getCallback(), spl_autoload_functions())) {
+		if (in_array($this->getCallback(), spl_autoload_functions(), true)) {
 			throw new \LogicException(sprintf(
 				'The loader has been already registered.'
 			));
@@ -60,7 +60,7 @@ abstract class AbstractLoader
 	 */
 	final public function unregister()
 	{
-		if (!in_array($this->getCallback(), spl_autoload_functions())) {
+		if (!in_array($this->getCallback(), spl_autoload_functions(), true)) {
 			throw new \LogicException(sprintf(
 				'The loader has not been registered yet.'
 			));

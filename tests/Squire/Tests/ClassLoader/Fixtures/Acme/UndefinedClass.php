@@ -8,5 +8,3 @@
  * The full copyright and license information are contained
  * in the COPYING.txt file distributed with the source code.
  */
-
-require_once dirname(__FILE__) . '/../src/autoload.php';

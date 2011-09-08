@@ -16,36 +16,100 @@ use Squire\ClassLoader\UniversalLoader;
 class UniversalLoaderTest extends \PHPUnit_Framework_TestCase
 {
 	/**
-	 * @dataProvider getLoadingTests
+	 * @dataProvider getFindingTests
 	 */
-	public function testLoading(array $namespaces, array $prefixes,
+	public function testFinding(array $namespaces, array $prefixes,
 		array $classes)
 	{
 		$loader = new UniversalLoader();
 		$loader->registerNamespaces($namespaces);
 		$loader->registerPrefixes($prefixes);
 		
-		foreach ($classes as $class) {
+		foreach ($classes as $class => $result) {
 			$loader->loadClass($class);
-			$this->assertTrue(class_exists($class) || interface_exists($class));
+			
+			if ($result) {
+				$this->assertTrue(
+					class_exists($class) ||
+					interface_exists($class)
+				);
+			}
+			else {
+				$this->assertFalse(
+					class_exists($class) ||
+					interface_exists($class)
+				);
+			}
 		}
 	}
 	
-	public function getLoadingTests()
+	public function getFindingTests()
 	{
 		return array(
 			array(
 				array(
-					'Acme' => dirname(__FILE__) . '/fixtures',
+					'Acme' => dirname(__FILE__) . '/Fixtures',
 				),
 				array(
-					'Foo' => dirname(__FILE__) . '/fixtures',
+					'Foo' => dirname(__FILE__) . '/Fixtures',
 				),
 				array(
-					'Acme\TestClass',
-					'Foo_TestClass',
+					'Acme\TestClass' => true,
+					'Foo_TestClass'  => true,
+					'Acme\Invalid'   => false,
+					'Foo_Invalid'    => false,
+					'Invalid'        => false,
+					'Foo\Invalid'    => false,
 				),
 			),
 		);
+	}
+	
+	public function testSplAutoload()
+	{
+		$loader = new UniversalLoader();
+		$loader->register();
+		
+		$this->assertContains(
+			array($loader, 'loadClass'),
+			spl_autoload_functions()
+		);
+		
+		$loader->unregister();
+		
+		$this->assertFalse(in_array(
+			array($loader, 'loadClass'),
+			spl_autoload_functions())
+		);
+	}
+	
+	/**
+	 * @expectedException \LogicException
+	 */
+	public function testExceptionOnInvalidSplAutoloadRegister()
+	{
+		$loader = new UniversalLoader();
+		$loader->register();
+		$loader->register();
+	}
+	
+	/**
+	 * @expectedException \LogicException
+	 */
+	public function testExceptionOnInvalidSplAutoloadUnregister()
+	{
+		$loader = new UniversalLoader();
+		$loader->unregister();
+	}
+	
+	/**
+	 * @expectedException \LogicException
+	 */
+	public function testExceptionOnUndefinedClass()
+	{
+		$loader = new UniversalLoader();
+		
+		$loader->registerNamespace('Acme', dirname(__FILE__) . '/Fixtures');
+		$loader->loadClass('Acme\UndefinedClass');
 	}
 }

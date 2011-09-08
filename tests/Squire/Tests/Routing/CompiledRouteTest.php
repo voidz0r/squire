@@ -24,7 +24,7 @@ class CompiledRouteTest extends \PHPUnit_Framework_TestCase
 		$compiler = new RouteCompiler();
 		$compiled = $compiler->compile($route);
 		
-		$this->assertEquals($regex, $compiled->getRegex());
+		$this->assertSame($regex, $compiled->getRegex());
 		$this->assertSame($route, $compiled->getRoute());
 	}
 	
