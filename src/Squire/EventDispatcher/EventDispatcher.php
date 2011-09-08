@@ -120,7 +120,7 @@ class EventDispatcher
 	 */
 	public function addListener($eventName, $listener, $priority = 5)
 	{
-		if ($this->hasListener($eventName, $listener)) {
+		if ($this->hasListener($eventName, $listener) !== false) {
 			throw new \InvalidArgumentException(sprintf(
 				'The given listener is already listening for "%s" event.',
 				$eventName
@@ -145,7 +145,7 @@ class EventDispatcher
 	{
 		$priority = $this->hasListener($eventName, $listener);
 		
-		if (!$priority) {
+		if ($priority === false) {
 			throw new \InvalidArgumentException(sprintf(
 				'The given listener has not been added to the "%s" event.',
 				$eventName
