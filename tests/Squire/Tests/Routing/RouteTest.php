@@ -22,9 +22,9 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 	{
 		$route = new Route($pattern, $defaults, $requirements);
 		
-		$this->assertEquals('/' . ltrim($pattern, '/'), $route->getPattern());
-		$this->assertEquals($defaults, $route->getDefaults());
-		$this->assertEquals($requirements, $route->getRequirements());
+		$this->assertSame('/' . ltrim($pattern, '/'), $route->getPattern());
+		$this->assertSame($defaults, $route->getDefaults());
+		$this->assertSame($requirements, $route->getRequirements());
 	}
     
 	/**
@@ -52,7 +52,7 @@ class RouteTest extends \PHPUnit_Framework_TestCase
 				'post/{slug}/{id}',
 				array(
 					'slug' => 'hello-world',
-					'id'   => 1,
+					'id'   => '1',
 				),
 				array(
 					'slug' => '[a-zA-Z0-9\-]+',

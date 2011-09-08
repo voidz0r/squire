@@ -26,7 +26,7 @@ class UriMatcherTest extends \PHPUnit_Framework_TestCase
 		$matcher  = $compiled->getMatcher();
 		
 		foreach ($tests as $uri => $return) {
-			$this->assertEquals($return, $matcher->match($uri));
+			$this->assertSame($return, $matcher->match($uri));
 		}
 	}
 	

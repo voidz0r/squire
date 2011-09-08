@@ -43,7 +43,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 		}
 		
 		foreach ($tests as $uri => $return) {
-			$this->assertEquals($return, $router->execute($uri));
+			$this->assertSame($return, $router->execute($uri));
 		}
 	}
 	
@@ -73,7 +73,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 				array(
 					'/user/1' => array(
 						'route'  => 'user_profile',
-						'params' => array('id' => 1),
+						'params' => array('id' => '1'),
 					),
 					
 					'/user/invalid' => false,
@@ -92,7 +92,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase
 					
 					'/post/hello-world/26' => array(
 						'route'  => 'post_read',
-						'params' => array('slug' => 'hello-world', 'id' => 26),
+						'params' => array('slug' => 'hello-world', 'id' => '26'),
 					),
 					
 					'/post' => false,
