@@ -114,9 +114,19 @@ class EventDispatcher
 	 * @param integer  $priority  Listener's priority.
 	 * 
 	 * @access public
+	 * 
+	 * @throws \InvalidArgumentException If the listener is already listening
+	 * 									 for the given event.
 	 */
 	public function addListener($eventName, $listener, $priority = 5)
 	{
+		if ($this->hasListener($eventName, $listener)) {
+			throw new \InvalidArgumentException(sprintf(
+				'The given listener is already listening for "%s" event.',
+				$eventName
+			));
+		}
+
 		$this->listeners[$eventName][$priority][] = $listener;
 		unset($this->sorted[$eventName]);
 	}

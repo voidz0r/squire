@@ -88,4 +88,18 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 		$dispatcher = new EventDispatcher();
 		$dispatcher->removeListener('foo', function(Event &$event) { });
 	}
+	
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testExceptionOnExistingListener()
+	{
+		$dispatcher = new EventDispatcher();
+		
+		$c = function(Event &$event) { };
+		
+		for ($i = 0; $i <= 2; $i++) {
+			$dispatcher->addListener('foo', $c);
+		}
+	}
 }
