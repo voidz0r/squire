@@ -77,7 +77,7 @@ class EventDispatcherTest extends \PHPUnit_Framework_TestCase
 		)));
 		$dispatcher->dispatch('foo', $event);
 		
-		$this->assertEquals('apple', $event->getParamBag()->get('fruit'));
+		$this->assertSame('apple', $event->getParamBag()->get('fruit'));
 	}
 	
 	/**
